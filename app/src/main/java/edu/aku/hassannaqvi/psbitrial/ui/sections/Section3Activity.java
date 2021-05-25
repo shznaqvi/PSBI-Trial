@@ -2,6 +2,7 @@ package edu.aku.hassannaqvi.psbitrial.ui.sections;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -32,13 +33,16 @@ public class Section3Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         bi = DataBindingUtil.setContentView(this, R.layout.activity_section3);
         bi.setCallback(this);
-        MainApp.form = new Form();
+        //MainApp.form = new Form();
         bi.setForm(MainApp.form);
         setSupportActionBar(bi.toolbar);
         setTitle(R.string.section3_mainheading);
 
         db = MainApp.appInfo.dbHelper;
-
+        Resources res = getResources();
+        String childDetails = "`"+form.getInfantName()+" ("+form.getMrNo()+")`";
+        String text = String.format(res.getString(R.string.hold_child), childDetails);
+        bi.holdChildInfo.setText(text);
       /*  bi.tsf303.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -64,9 +68,14 @@ public class Section3Activity extends AppCompatActivity {
         }
     }
 
-   /* public void btnEnd(View view) {
-        AppUtilsKt.contextEndActivity(this);
-    }*/
+    public void btnEnd(View view) {
+        saveDraft();
+
+        Intent i = new Intent(this, EndingActivity.class);
+        i.putExtra("complete",false);
+        startActivity(i);
+
+    }
 
     private boolean formValidation() {
         return Validator.emptyCheckingContainer(this, bi.GrpName);
@@ -162,7 +171,8 @@ public class Section3Activity extends AppCompatActivity {
                 SharedPreferences.Editor spEdit = sp.edit();
                 spEdit.putString(form.getMrNo(), currentTime.toString());
                 spEdit.apply();
-                Toast.makeText(this, "This child has been added to On-Hold List!", Toast.LENGTH_SHORT).show();
+                form.setiStatus("9");
+                Toast.makeText(this, form.getInfantName()+" ("+form.getMrNo()+") has been added to On-Hold List!", Toast.LENGTH_SHORT).show();
             }
             return true;
         } else {

@@ -27,7 +27,7 @@ public class Section4Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         bi = DataBindingUtil.setContentView(this, R.layout.activity_section4);
         bi.setCallback(this);
-        MainApp.form = new Form();
+        //MainApp.form = new Form();
         bi.setForm(MainApp.form);
         setSupportActionBar(bi.toolbar);
         setTitle(R.string.section4_mainheading);
@@ -45,9 +45,14 @@ public class Section4Activity extends AppCompatActivity {
             startActivity(i);        }
     }
 
-   /* public void btnEnd(View view) {
-        AppUtilsKt.contextEndActivity(this);
-    }*/
+    public void btnEnd(View view) {
+        saveDraft();
+
+        Intent i = new Intent(this, EndingActivity.class);
+        i.putExtra("complete",false);
+        startActivity(i);
+
+    }
 
     private boolean formValidation() {
         return Validator.emptyCheckingContainer(this, bi.GrpName);    }

@@ -10,6 +10,8 @@ import android.widget.Toast;
 
 import com.validatorcrawler.aliazaz.Validator;
 
+import java.util.Map;
+
 import edu.aku.hassannaqvi.psbitrial.R;
 import edu.aku.hassannaqvi.psbitrial.contracts.TableContracts;
 import edu.aku.hassannaqvi.psbitrial.core.MainApp;
@@ -28,7 +30,7 @@ public class Section5Activity extends AppCompatActivity {
         bi = DataBindingUtil.setContentView(this, R.layout.activity_section5);
         bi.setCallback(this);
         setSupportActionBar(bi.toolbar);
-        MainApp.form = new Form();
+        //MainApp.form = new Form();
         bi.setForm(MainApp.form);
         setTitle(R.string.section5_mainheading);
 
@@ -41,16 +43,24 @@ public class Section5Activity extends AppCompatActivity {
         if (updateDB()) {
             Toast.makeText(this, "Patient Added.", Toast.LENGTH_SHORT).show();
             finish();
-            Intent i = new Intent(this, Section3Activity.class);
+            Intent i = new Intent(this, EndingActivity.class);
+            i.putExtra("complete",true);
             startActivity(i);
         }
     }
 
-/*
     public void btnEnd(View view) {
-        AppUtilsKt.contextEndActivity(this);
+        if (!formValidation()) return;
+        saveDraft();
+        if (updateDB()) {
+            Toast.makeText(this, "Patient Added.", Toast.LENGTH_SHORT).show();
+            finish();
+            Intent i = new Intent(this, EndingActivity.class);
+            i.putExtra("complete",true);
+            startActivity(i);
+        }
+
     }
-*/
 
     private boolean formValidation() {
         return Validator.emptyCheckingContainer(this, bi.GrpName);    }

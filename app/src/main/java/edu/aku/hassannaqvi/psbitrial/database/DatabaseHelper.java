@@ -14,6 +14,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import edu.aku.hassannaqvi.psbitrial.models.Users;
 import edu.aku.hassannaqvi.psbitrial.models.VersionApp;
@@ -21,6 +22,9 @@ import edu.aku.hassannaqvi.psbitrial.contracts.TableContracts.*;
 import edu.aku.hassannaqvi.psbitrial.core.MainApp;
 
 import edu.aku.hassannaqvi.psbitrial.models.Form;
+import edu.aku.hassannaqvi.psbitrial.models.ZStandard;
+
+import static edu.aku.hassannaqvi.psbitrial.database.CreateTable.*;
 
 
 
@@ -35,14 +39,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private final String TAG = "DatabaseHelper";
 
     public DatabaseHelper(Context context) {
-        super(context, CreateTable.DATABASE_NAME, null, CreateTable.DATABASE_VERSION);
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CreateTable.SQL_CREATE_USERS);
-        db.execSQL(CreateTable.SQL_CREATE_FORMS);
-        db.execSQL(CreateTable.SQL_CREATE_VERSIONAPP);
+        db.execSQL(SQL_CREATE_USERS);
+        db.execSQL(SQL_CREATE_FORMS);
+        db.execSQL(SQL_CREATE_VERSIONAPP);
+        db.execSQL(SQL_CREATE_ZSTANDARD);
 
     }
 
@@ -98,7 +103,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /*
      * Functions that dealing with table data
      * */
-    public Users getLoginUser(String username, String password) {
+    public boolean doLogin(String username, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = null;
         String[] columns = {
@@ -113,7 +118,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String having = null;
         String orderBy = UsersTable.COLUMN_ID + " ASC";
 
-        Users allForms = null;
+        Users loggedInUser = null;
         try {
             c = db.query(
                     UsersTable.TABLE_NAME,  // The table to query
@@ -125,7 +130,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     orderBy                    // The sort order
             );
             while (c.moveToNext()) {
-                allForms = new Users().hydrate(c);
+                loggedInUser = new Users().hydrate(c);
             }
         } finally {
             if (c != null) {
@@ -135,7 +140,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 db.close();
             }
         }
-        return allForms;
+       MainApp.user = loggedInUser;
+        return c.getCount() > 0 ;
     }
 
 
@@ -288,8 +294,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(FormsTable.COLUMN_TSF305, temp);
 
-        String selection = FormsTable.COLUMN_MR_NUMBER + " =? AND "+ FormsTable.COLUMN_ISTATUS + " =?";
-        String[] selectionArgs = {mrno, "9"};
+     //   String selection = FormsTable.COLUMN_MR_NUMBER + " =? AND "+ FormsTable.COLUMN_ISTATUS + " =? ";
+        String selection = FormsTable.COLUMN_MR_NUMBER + " =? ";
+        //String[] selectionArgs = {mrno, "9"};
+        String[] selectionArgs = {mrno};
 
         return db.update(FormsTable.TABLE_NAME,
                 values,
@@ -540,5 +548,88 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             alc.set(1, Cursor2);
             return alc;
         }
+    }
+
+    public List<String> getLMS(int age, int gender, String catA, String catB) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Log.d(TAG, "getLMS: " + age + " | " + gender + " | " + catA + " | " + catB);
+        Cursor c = db.rawQuery("SELECT l,m,s " +
+                        "FROM " + ZScoreTable.TABLE_NAME + " " +
+                        "WHERE " + ZScoreTable.COLUMN_AGE + "=? " +
+                        "AND "
+                        + ZScoreTable.COLUMN_SEX + "=?" +
+                        "AND "
+                        + ZScoreTable.COLUMN_CAT + " IN (?,?)"
+                ,
+                new String[]{String.valueOf(age), String.valueOf(gender), catA, catB});
+        List<String> lms = null;
+        while (c.moveToNext()) {
+            lms = new ArrayList<>();
+            lms.add(c.getString(c.getColumnIndex(ZScoreTable.COLUMN_L)));
+            Log.d(TAG, "getLMS: L -> " + c.getString(c.getColumnIndex(ZScoreTable.COLUMN_L)));
+            lms.add(c.getString(c.getColumnIndex(ZScoreTable.COLUMN_M)));
+            Log.d(TAG, "getLMS: M -> " + c.getString(c.getColumnIndex(ZScoreTable.COLUMN_M)));
+            lms.add(c.getString(c.getColumnIndex(ZScoreTable.COLUMN_S)));
+            Log.d(TAG, "getLMS: S -> " + c.getString(c.getColumnIndex(ZScoreTable.COLUMN_S)));
+
+        }
+        return lms;
+    }
+
+    public List<String> getWHLMS(Double height, int gender, String catA) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT l,m,s " +
+                        "FROM " + ZScoreTable.TABLE_NAME +
+                        " WHERE " + ZScoreTable.COLUMN_MEASURE + "=?" +
+                        " AND " + ZScoreTable.COLUMN_SEX + "=?" +
+                        " AND " + ZScoreTable.COLUMN_CAT + "=?"
+                ,
+                new String[]{String.valueOf(height), String.valueOf(gender), catA});
+        List<String> whlms = new ArrayList<>();
+        Log.d(TAG, "getWHLMS: height " + height);
+        Log.d(TAG, "getWHLMS: " + c.getCount());
+        while (c.moveToNext()) {
+            whlms = new ArrayList<>();
+            whlms.add(c.getString(c.getColumnIndex(ZScoreTable.COLUMN_L)));
+            whlms.add(c.getString(c.getColumnIndex(ZScoreTable.COLUMN_M)));
+            whlms.add(c.getString(c.getColumnIndex(ZScoreTable.COLUMN_S)));
+
+        }
+        c.close();
+        return whlms;
+    }
+
+
+    public int syncZStandard(JSONArray zsList) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(ZScoreTable.TABLE_NAME, null, null);
+        int insertCount = 0;
+        try {
+            for (int i = 0; i < zsList.length(); i++) {
+
+                JSONObject jsonObjectzs = zsList.getJSONObject(i);
+
+                ZStandard Zstandard = new ZStandard();
+                Zstandard.Sync(jsonObjectzs);
+                ContentValues values = new ContentValues();
+
+                values.put(ZScoreTable.COLUMN_SEX, Zstandard.getSex());
+                values.put(ZScoreTable.COLUMN_AGE, Zstandard.getAge());
+                values.put(ZScoreTable.COLUMN_MEASURE, Zstandard.getMeasure());
+                values.put(ZScoreTable.COLUMN_L, Zstandard.getL());
+                values.put(ZScoreTable.COLUMN_M, Zstandard.getM());
+                values.put(ZScoreTable.COLUMN_S, Zstandard.getS());
+                values.put(ZScoreTable.COLUMN_CAT, Zstandard.getCat());
+                long rowID = db.insert(ZScoreTable.TABLE_NAME, null, values);
+                if (rowID != -1) insertCount++;
+            }
+
+        } catch (Exception e) {
+            Log.d(TAG, "syncZStandard(e): " + e);
+            db.close();
+        } finally {
+            db.close();
+        }
+        return insertCount;
     }
 }

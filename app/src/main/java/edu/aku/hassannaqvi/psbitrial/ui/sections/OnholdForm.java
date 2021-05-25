@@ -3,6 +3,7 @@ package edu.aku.hassannaqvi.psbitrial.ui.sections;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -11,7 +12,13 @@ import androidx.databinding.DataBindingUtil;
 
 import com.validatorcrawler.aliazaz.Validator;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import edu.aku.hassannaqvi.psbitrial.R;
 import edu.aku.hassannaqvi.psbitrial.core.MainApp;
@@ -49,17 +56,21 @@ public class OnholdForm extends AppCompatActivity {
         if (updateDB()) {
             Toast.makeText(this, "Patient Added.", Toast.LENGTH_SHORT).show();
             finish();
-            Intent i = new Intent(this, Section4Activity.class);
+            Intent i = new Intent(this, OnholdForm.class);
             startActivity(i);
         }
     }
 
     private boolean updateDB() {
 
-        long updCount = db.updateTemp(bi.mrno.getText().toString(), bi.tsf305.getText().toString());
-        if (updCount != -1) {
+        String mrno = bi.mrno.getText().toString();
+        String temp = bi.tsf305.getText().toString();
+
+        int updCount = db.updateTemp(mrno, temp);
+        Log.d("TAG", "updateDB: "+updCount);
+        if (updCount > 0) {
             updateOnHoldList();
-            Toast.makeText(this, "Temperature Updated for MR.No.: " + bi.mrno.getText().toString(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Temperature Updated for MR.No.: " +mrno, Toast.LENGTH_LONG).show();
 
             return true;
         } else {
@@ -73,13 +84,51 @@ public class OnholdForm extends AppCompatActivity {
     private void updateOnHoldList() {
 
         edit.remove(bi.mrno.getText().toString());
-        String holdmap = "";
-        Map<String, ?> onhold = sp.getAll();
-        for (Map.Entry<String, ?> entry : onhold.entrySet())
-            holdmap += "ID = " + entry.getKey() +
-                    ", | Time = " + entry.getValue();
+        edit.apply();
 
-        bi.onholdlist.setText(onhold.toString());
+        SimpleDateFormat df = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.ENGLISH);
+        String todayDate = df.format(Calendar.getInstance().getTime());
+       Calendar cal = Calendar.getInstance();
+       Calendar cur = Calendar.getInstance();
+        long timeLapsed = 0;
+
+        String holdmap = "";
+
+
+
+        Map<String, ?> onhold = sp.getAll();
+        for (Map.Entry<String, ?> entry : onhold.entrySet()) {
+
+
+            try {
+                cal.setTime(df.parse(String.valueOf(entry.getValue())));
+                timeLapsed = System.currentTimeMillis() - cal.getTimeInMillis();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+
+            String mark = "\t         ";
+            if(TimeUnit.MILLISECONDS.toMinutes(timeLapsed) > 120){
+                mark = "\t***** --> ";
+            } else if(TimeUnit.MILLISECONDS.toMinutes(timeLapsed) > 90){
+                mark = "\t***   --> ";
+            } else if(TimeUnit.MILLISECONDS.toMinutes(timeLapsed) > 60){
+                mark = "\t**    --> ";
+            } else if(TimeUnit.MILLISECONDS.toMinutes(timeLapsed) > 30){
+                mark = "\t*     --> ";
+            }
+
+
+            holdmap += mark+"MR. Number: " + entry.getKey() +
+                    ",\t |\t On-Hold Since: " + cal.get(Calendar.HOUR)+":"+cal.get(Calendar.MINUTE)
+                    + ",\t |\t Lapsed: " + String.format("%02d hours, %02d mins",
+                                                        TimeUnit.MILLISECONDS.toHours(timeLapsed),
+                                                        TimeUnit.MILLISECONDS.toMinutes(timeLapsed)
+            -TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(timeLapsed)))
+                    + "\r\n";
+        }
+        bi.onholdlist.setText(holdmap);
         bi.mrno.setText(null);
         bi.tsf305.setText(null);
         Toast.makeText(this, onhold.toString(), Toast.LENGTH_SHORT).show();

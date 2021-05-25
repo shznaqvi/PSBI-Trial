@@ -1,7 +1,11 @@
 package edu.aku.hassannaqvi.psbitrial.core;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
+import android.provider.Settings;
+import android.telephony.TelephonyManager;
 import android.view.View;
 
 
@@ -10,6 +14,7 @@ import org.json.JSONArray;
 import java.io.File;
 import java.util.List;
 
+import edu.aku.hassannaqvi.psbitrial.BuildConfig;
 import edu.aku.hassannaqvi.psbitrial.models.Users;
 import edu.aku.hassannaqvi.psbitrial.R;
 
@@ -18,7 +23,7 @@ import edu.aku.hassannaqvi.psbitrial.models.Form;
 
 public class MainApp extends Application {
 
-    public static final String PROJECT_NAME = "Naunehal Baseline Survey";
+    public static final String PROJECT_NAME = "PSBI TRIAL";
     public static final String DIST_ID = null;
     public static final String SYNC_LOGIN = "sync_login";
     public static final String _IP = "https://vcoe1.aku.edu";// .LIVE server
@@ -39,6 +44,11 @@ public class MainApp extends Application {
     public static List<JSONArray> uploadData;
     public static SharedPreferences.Editor editor;
     public static SharedPreferences sharedPref;
+    public static String deviceid;
+    public static int versionCode = BuildConfig.VERSION_CODE;
+    public static String versionName = BuildConfig.VERSION_NAME;
+    public static int MY_PERMISSIONS_REQUEST_READ_PHONE_STATE = 2;
+    public static long TWO_MINUTES = 1000 * 60 * 2;
 
     public static void hideSystemUI(View decorView) {
         // Enables regular immersive mode.
@@ -68,5 +78,27 @@ public class MainApp extends Application {
         MainApp.editor
                 .putString("mh01","")
                 .apply();
+        deviceid = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+
     }
+
+    public static String getDeviceId(Context context) {
+        String deviceId;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            deviceId = Settings.Secure.getString(
+                    context.getContentResolver(),
+                    Settings.Secure.ANDROID_ID);
+        } else {
+           /* final TelephonyManager mTelephony = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+            if (mTelephony.getDeviceId() != null) {
+                deviceId = mTelephony.getDeviceId();
+            } else {
+                deviceId = Settings.Secure.getString(
+                        context.getContentResolver(),
+                        Settings.Secure.ANDROID_ID);
+            }*/
+        }
+        return "deviceId";
+    }
+
 }

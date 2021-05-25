@@ -87,6 +87,7 @@
                             android:hint="YYYY-MM-DD"
                             android:inputType="number"
                             app:dateFormat="yyyy-MM-dd"
+                            android:onTextChanged="@{callback::setAgeInDays}"
                             app:maxDate="CR_DATE"
                             app:minDate="CR_DATE"
                             app:theme="@style/MyDatePickerDialogTheme" />
@@ -129,8 +130,9 @@
                             android:hint="@string/tsf202"
                             android:inputType="number"
                             android:maxLength="2"
+                            android:onTextChanged="@{callback::ZScoreOnTextChanged}"
                             app:maxValue="59"
-                            app:minValue="1"
+                            app:minValue="0"
                             app:type="range" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -168,57 +170,16 @@
                             android:id="@+id/tsf203"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="@string/tsf203"
+                            android:hint="####"
                             android:inputType="number"
                             android:maxLength="4"
+                            app:mask="####"
+                            android:onTextChanged="@{callback::ZScoreOnTextChanged}"
                             app:maxValue="5500"
                             app:minValue="1500"
                             app:type="range" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
-
-                <!-- tsf204  Input-Numeric   -->
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/fldGrpCVtsf204"
-                    style="@style/cardView">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/bottom"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                style="@style/quesNum"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:text="@string/Q_tsf204" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:text="@string/tsf204" />
-                        </LinearLayout>
-
-                        <com.edittextpicker.aliazaz.EditTextPicker
-                            android:id="@+id/tsf204"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/tsf204"
-                            android:inputType="number"
-                            android:maxLength="3"
-                            app:maxValue="6.0"
-                            app:minValue="-6.0"
-                            app:type="range" />
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
                 <!-- tsf205  Radio   -->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/fldGrpCVtsf205"
@@ -252,6 +213,7 @@
                             android:id="@+id/tsf205"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:onCheckedChanged="@{callback::ZScoreOnCheckChanged}"
                             android:orientation="horizontal">
 
                             <RadioButton
@@ -270,6 +232,63 @@
                         </RadioGroup>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
+                <!-- tsf204  Input-Numeric   -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/fldGrpCVtsf204"
+                    style="@style/cardView">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bottom"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/quesNum"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="@string/Q_tsf204" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:text="@string/tsf204" />
+                        </LinearLayout>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+>
+     <com.edittextpicker.aliazaz.EditTextPicker
+                            style="@style/textInput"
+                            android:id="@+id/tsf204"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="@string/tsf204"
+                            android:inputType="number"
+                            android:maxLength="9"
+                            app:mask="#.######"
+                            app:maxValue="6.0"
+                            app:minValue="-6.0"
+                            app:type="range" />
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:elevation="1dp"
+        android:onClick="@{callback::CheckZScore}"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ic_calculate"/>
+
+</RelativeLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+
 
                 <!-- tsf206  Title   -->
                 <androidx.cardview.widget.CardView

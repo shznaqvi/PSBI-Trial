@@ -10,6 +10,12 @@ import androidx.databinding.DataBindingUtil;
 
 import com.validatorcrawler.aliazaz.Validator;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import edu.aku.hassannaqvi.psbitrial.R;
 import edu.aku.hassannaqvi.psbitrial.contracts.TableContracts;
 import edu.aku.hassannaqvi.psbitrial.core.MainApp;
@@ -31,9 +37,8 @@ public class Section1Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         bi = DataBindingUtil.setContentView(this, R.layout.activity_section1);
         bi.setCallback(this);
-        MainApp.form = new Form();
-      bi.setCallback(this);
-      bi.setForm(MainApp.form = new Form());
+        // MainApp.form = new Form(); Set on OPEN Form Button in MainActivity
+        bi.setForm(MainApp.form);
         setSupportActionBar(bi.toolbar);
         setTitle(R.string.section1_mainheading);
 
@@ -54,9 +59,14 @@ public class Section1Activity extends AppCompatActivity {
         }
     }
 
- /*   public void btnEnd(View view) {
-        AppUtilsKt.contextEndActivity(this);
-    }*/
+    public void btnEnd(View view) {
+        saveDraft();
+
+        Intent i = new Intent(this, EndingActivity.class);
+        i.putExtra("complete",false);
+        startActivity(i);
+
+    }
 
     private boolean formValidation() {
         return Validator.emptyCheckingContainer(this, bi.GrpName);
@@ -65,6 +75,11 @@ public class Section1Activity extends AppCompatActivity {
     private void saveDraft() {
 
         // MainApp.form is only initialised at first section
+
+        form.setUserName(MainApp.user.getUserName());
+        form.setSysDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
+        form.setDeviceId(MainApp.deviceid);
+        form.setAppver(MainApp.versionName+"."+MainApp.versionCode);
 
         form.setTsf101(bi.tsf101.getText().toString());
         form.setTsf102(bi.tsf102.getText().toString());

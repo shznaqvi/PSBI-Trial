@@ -5,6 +5,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.math.roundToInt
 
 fun monthsBetweenDates(startDate: Date, endDate: Date): Int {
     val start = Calendar.getInstance()
@@ -45,7 +46,7 @@ fun ageInMonths(year: String, month: String): Long {
 }
 
 fun convertDateFormat(dateStr: String): String {
-    val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+    val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
     try {
         val d = sdf.parse(dateStr)
         return SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(d)
@@ -55,15 +56,26 @@ fun convertDateFormat(dateStr: String): String {
     return ""
 }
 
-fun convertDateFormatYMD(dateStr: String): String {
-    val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
+fun getDateFormat(dtFormat: String, dateStr: String): Date {
+    val sdf = SimpleDateFormat(dtFormat, Locale.ENGLISH)
     try {
-        val d = sdf.parse(dateStr)
-        return SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(d)
+        val parse = sdf.parse(dateStr)
+        parse?.let { return it } ?: Date()
     } catch (ex: ParseException) {
         ex.printStackTrace()
     }
-    return ""
+    return Date()
+}
+
+fun getMonthAndYearFromStr(start: String, end: String): Pair<Int, Int> {
+    val totalMonths = monthsBetweenDates(
+            getDateFormat("yyyy-MM-dd", start),
+            getDateFormat("dd/MM/yyyy", end)
+    )
+    val years = totalMonths / 12
+    val months = totalMonths - years * 12
+
+    return Pair(years, months)
 }
 
 fun getYearsBack(format: String, year: Int): String {
@@ -174,12 +186,19 @@ fun ageInMonthsByDOB(cal: Calendar): Long {
     return Math.floor(ageInMonths).toLong()
 }
 
-fun dobDiff(cal: Calendar, cal2: Calendar): Long {
+fun dobDiffInMonths(cal: Calendar, cal2: Calendar): Long {
     val dob = cal.time
     val visitDate = cal2.time
     val diff = (visitDate.time - dob.time).toFloat()
     val ageInMonths = diff / (24 * 60 * 60 * 1000) / 30.4375
     return Math.floor(ageInMonths).toLong()
+}
+
+fun dobDiffInDays(cal: Calendar, cal2: Calendar): Int {
+    val dob = cal.time
+    val visitDate = cal2.time
+    val diff = (visitDate.time - dob.time).toFloat()
+    return (diff / (24 * 60 * 60 * 1000)).roundToInt()
 }
 
 fun ageInDaysByDOB(dateStr: String): Long {
@@ -191,7 +210,7 @@ fun ageInDaysByDOB(dateStr: String): Long {
 }
 
 fun getCalDate(value: String): Calendar {
-    val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
+    val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
     val calendar = Calendar.getInstance()
     try {
         val date = sdf.parse(value)

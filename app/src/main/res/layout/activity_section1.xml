@@ -124,10 +124,18 @@
                                 android:text="@string/tsf102" />
                         </LinearLayout>
 
-                        <EditText
+                        <com.edittextpicker.aliazaz.EditTextPicker
                             android:id="@+id/tsf102"
+                            style="@style/textInput"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:inputType="number"
+                            app:mask="###-##-##"
+                            app:maxValue="9999999"
+                            app:minValue="0">
+
+                            <requestFocus />
+                        </com.edittextpicker.aliazaz.EditTextPicker>
                             android:hint="@string/tsf102" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -590,9 +598,11 @@
                         android:layout_weight="1"
                         android:layout_height="match_parent"
                         android:textSize="18sp"
-                        android:background="@android:color/transparent"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/all_round_corners_stroke"
                         android:textStyle="bold"
                         android:onClick="btnEnd"
+                        android:minHeight="56dp"
                         android:text="Cancel"
                         android:textColor="@color/colorPrimary" />
 
@@ -601,9 +611,11 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="match_parent"
+                        android:minHeight="56dp"
                         android:backgroundTintMode="src_atop"
                         android:backgroundTint="@color/colorAccent"
-                        android:background="@drawable/capsule"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/all_round_corners"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:onClick="btnContinue"

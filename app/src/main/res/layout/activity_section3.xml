@@ -233,9 +233,10 @@
 
                         <TextView
                             style="@style/info"
+                            android:id="@+id/holdChildInfo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Please hold this child in waiting area and check temperature after 30 minutes."
+                            android:text="@string/hold_child"
                             android:visibility="@{!tsf304.text.toString().equals(``)? Float.valueOf(tsf304.text.toString()) >= 38.0f || Float.valueOf(tsf304.text.toString()) &lt; 35.5f ? View.VISIBLE:View.GONE :View.GONE}" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>

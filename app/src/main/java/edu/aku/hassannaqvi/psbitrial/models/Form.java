@@ -29,7 +29,7 @@ public class Form extends BaseObservable {
     public String tsf103;
     public String tsf104;
     public String tsf105;
-    public String tsf106;
+    public String tsf106 = "";
     public String tsf107;
     public String tsf108;
     public String tsf109;
@@ -140,6 +140,7 @@ public class Form extends BaseObservable {
 
     public void setTsf102(String tsf102) {
         this.tsf102 = tsf102;
+        this.mrNo = tsf102;  // Set MR NO
         notifyPropertyChanged(BR.tsf102);
     }
 
@@ -160,6 +161,7 @@ public class Form extends BaseObservable {
 
     public void setTsf104(String tsf104) {
         this.tsf104 = tsf104;
+        this.infantName = tsf104; // Set Infant Name
         notifyPropertyChanged(BR.tsf104);
     }
 

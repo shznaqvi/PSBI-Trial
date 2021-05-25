@@ -91,14 +91,18 @@
                         android:text="@string/tsf102" />
 
 
-                    <EditText
+                    <com.edittextpicker.aliazaz.EditTextPicker
                         android:id="@+id/mrno"
                         style="@style/textInput"
                         android:layout_width="match_parent"
+                        android:inputType="number"
+                        app:mask="###-##-##"
+                        app:minValue="0"
+                        app:maxValue="9999999"
                         android:layout_height="wrap_content">
 
                         <requestFocus />
-                    </EditText>
+                    </com.edittextpicker.aliazaz.EditTextPicker>
 
 
                     <TextView

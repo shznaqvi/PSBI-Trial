@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PSBI</string>
+    <string name="app_name">PSBI Trial</string>
     <string name="section1_mainheading"> Section 1: Identifying Information</string>
     <string name="section2_mainheading"> Section 2: Young Infant Information</string>
     <string name="section3_mainheading"> Section 3: Eligibility </string>
@@ -247,5 +247,18 @@
     -->
     <string name="hello_world">Hello Square World!</string>
     <string name="tsf40298">Don\'t Know</string>
+    <string name="hold_child">Please hold child <b>%1$s</b> in waiting area and check temperature after 30 minutes.</string>
+    <string name="istatusb">Incomplete</string>
+    <string name="istatusa">Complete</string>
+    <string name="istatusc">On-Hold</string>
+    <string name="istatus">Interview Status</string>
+    <string name="btnDownload">Download Data</string>
+
+    <!--Z-Score-->
+    <string name="zScoreMsg">"Please click on Z-Score Button"</string>
+    <string name="zScoreEmpty">"Z-Score cannot be evaluated with missing values."</string>
+    <string name="hlaz">HLAZ</string>
+    <string name="waz">WAZ</string>
+    <string name="whz">WHZ</string>
 
 </resources>

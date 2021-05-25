@@ -5,19 +5,30 @@ import androidx.databinding.DataBindingUtil;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.validatorcrawler.aliazaz.Validator;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 import edu.aku.hassannaqvi.psbitrial.R;
 import edu.aku.hassannaqvi.psbitrial.contracts.TableContracts.FormsTable;
 import edu.aku.hassannaqvi.psbitrial.core.MainApp;
+import edu.aku.hassannaqvi.psbitrial.core.ZScore;
 import edu.aku.hassannaqvi.psbitrial.database.DatabaseHelper;
 import edu.aku.hassannaqvi.psbitrial.databinding.ActivitySection2Binding;
 import edu.aku.hassannaqvi.psbitrial.models.Form;
 
 import static edu.aku.hassannaqvi.psbitrial.core.MainApp.form;
+import static edu.aku.hassannaqvi.psbitrial.utils.DateUtilsKt.dobDiffInDays;
+import static edu.aku.hassannaqvi.psbitrial.utils.DateUtilsKt.getCalDate;
+import static edu.aku.hassannaqvi.psbitrial.utils.DateUtilsKt.getDateDiff;
 
 public class Section2Activity extends AppCompatActivity {
     ActivitySection2Binding bi;
@@ -27,7 +38,7 @@ public class Section2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         bi = DataBindingUtil.setContentView(this, R.layout.activity_section2);
         bi.setCallback(this);
-        MainApp.form = new Form();
+        //MainApp.form = new Form();
         bi.setForm(MainApp.form);
         setSupportActionBar(bi.toolbar);
         setTitle(R.string.section2_mainheading);
@@ -49,9 +60,14 @@ public class Section2Activity extends AppCompatActivity {
         }
     }
 
-  /*  public void btnEnd(View view) {
-        AppUtilsKt.contextEndActivity(this);
-    }*/
+    public void btnEnd(View view) {
+        saveDraft();
+
+        Intent i = new Intent(this, EndingActivity.class);
+        i.putExtra("complete",false);
+        startActivity(i);
+
+    }
 
     private boolean formValidation() {
         return Validator.emptyCheckingContainer(this, bi.GrpName);    }
@@ -105,5 +121,59 @@ public class Section2Activity extends AppCompatActivity {
             return false;
         }
     }
+    public void CheckZScore(View view) {
+        if (Validator.emptyRadioButton(this, bi.tsf205, bi.tsf20501)
+                && Validator.emptyTextBox(this, bi.tsf202)
+                && Validator.emptyTextBox(this, bi.tsf203)
 
+        ) {
+           /* int ageinmonths = Integer.parseInt(bi.cs1502.getText().toString()) + (Integer.parseInt(bi.cs1501.getText().toString())*12);
+            Log.d("TAG", "CheckZScore: "+ ageinmonths);
+            int ageindays = (int) Math.floor(ageinmonths * DAYS_IN_A_MONTH);
+            Log.d("TAG", "CheckZScore: "+ ageindays);*/
+
+            int gender = bi.tsf20501.isChecked() ? 1 : bi.tsf20502.isChecked() ? 2 : 0;
+
+            //DOB(format): dd-MM-yyyy
+            int ageindays = Integer.parseInt(bi.tsf202.getText().toString());
+
+            ZScore zs = new ZScore((int) ageindays, gender);
+            //double HLAZ = zs.getZScore_HLAZ(bi.cs21.getText().toString());
+            double WAZ = zs.getZScore_WAZ(String.valueOf(Integer.parseInt(bi.tsf203.getText().toString())/1000));
+            //double WHZ = zs.getZScore_WHZ(bi.cs22.getText().toString(), bi.cs21.getText().toString());
+            Log.d("TAG", "CheckZScore: "+WAZ);
+            bi.tsf204.setText(String.valueOf(WAZ));
+        } else {
+            Toast.makeText(this, getString(R.string.zScoreEmpty), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void ZScoreOnTextChanged(CharSequence s, int start, int before, int count) {
+        bi.tsf204.setText(null);
+
+    }
+
+    public void ZScoreOnCheckChanged(RadioGroup group, int checkedId) {
+        bi.tsf204.setText(null);
+    }
+
+    public void setAgeInDays(CharSequence s, int start, int before, int count) {
+
+        if(!bi.tsf201.getText().toString().equals(""))
+        {
+            // For testing only
+           // form = new Form();
+            if(form.getTsf106().equals("")){
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                String todayDate = df.format(Calendar.getInstance().getTime());
+                form.setTsf106(todayDate);}
+
+            getCalDate(form.getTsf106());
+            int ageindayss = dobDiffInDays(
+                    getCalDate(form.getTsf106()),
+                    getCalDate( bi.tsf201.getText().toString()));
+            bi.tsf202.setText(String.valueOf(ageindayss));
+        }
+
+    }
 }

@@ -3,7 +3,7 @@ package edu.aku.hassannaqvi.psbitrial.database
 import edu.aku.hassannaqvi.psbitrial.contracts.TableContracts.*
 
 object CreateTable {
-    const val PROJECT_NAME = "NAUNEHAL2021"
+    const val PROJECT_NAME = "PSBITrial"
     const val DATABASE_NAME = "$PROJECT_NAME.db"
     const val DATABASE_COPY = "${PROJECT_NAME}_copy.db"
     const val DATABASE_VERSION = 1
@@ -48,6 +48,15 @@ object CreateTable {
             + VersionTable.COLUMN_PATH_NAME + " TEXT "
             + ");"
             )
-
+    const val SQL_CREATE_ZSTANDARD = "CREATE TABLE " + ZScoreTable.TABLE_NAME + " (" +
+            ZScoreTable._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+            ZScoreTable.COLUMN_SEX + " TEXT, " +
+            ZScoreTable.COLUMN_AGE + " TEXT, " +
+            ZScoreTable.COLUMN_MEASURE + " TEXT, " +
+            ZScoreTable.COLUMN_L + " TEXT, " +
+            ZScoreTable.COLUMN_M + " TEXT, " +
+            ZScoreTable.COLUMN_S + " TEXT, " +
+            ZScoreTable.COLUMN_CAT + " TEXT " +
+            ");"
 
 }
