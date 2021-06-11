@@ -16,6 +16,7 @@
     <string name="check_pending_forms">CHECK PENDING FORMS</string>
     <string name="open_surveillance_form">OPEN SURVEILLANCE FORM</string>
     <string name="open_onhold_form">UPDATE ONHOLD FORM</string>
+    <string name="open_followup_form">OPEN FOLLOW-UP FORM</string>
     <string name="records_summary">Records Summary</string>
     <string name="main_menu">Main Menu</string>
     <string name="only_for_testing">ONLY FOR TESTING</string>

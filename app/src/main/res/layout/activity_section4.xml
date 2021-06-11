@@ -2,7 +2,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <import type="android.view.View" />
         <variable
             name="form"
@@ -116,7 +115,8 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
-                <!-- tsf402  CheckBox   -->
+                <!-- tsf402  CheckBox                      android:visibility="@{tsf40104.checked?View.GONE:View.VISIBLE}"
+ -->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/fldGrpCVtsf402"
                     style="@style/cardView">

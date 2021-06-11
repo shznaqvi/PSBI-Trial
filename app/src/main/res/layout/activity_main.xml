@@ -30,21 +30,15 @@
             app:popupTheme="@style/AppTheme.PopupOverlay"
             app:titleTextColor="@color/black" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="24dp"
-            android:gravity="center_horizontal|center_vertical"
-            android:orientation="vertical"
-            android:padding="24dp">
+
 
             <ImageView
                 android:layout_width="180dp"
                 android:layout_height="180dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="12dp"
                 android:src="@drawable/app_icon" />
 
-
-        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -58,9 +52,19 @@
                 android:elevation="1dp"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
-                android:padding="110dp">
+                android:paddingStart="72dp"
+                android:paddingTop="48dp"
+                android:paddingEnd="72dp">
 
-
+<TextView
+    android:id="@+id/username"
+    android:textAppearance="@style/MaterialAlertDialog.MaterialComponents.Title.Panel"
+    android:layout_width="wrap_content"
+    android:layout_gravity="start"
+    android:layout_margin="4dp"
+    android:padding="4dp"
+    android:textColor="@color/colorPrimary"
+    android:layout_height="wrap_content"/>
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -82,8 +86,8 @@
 
                         <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_margin="24dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="12dp"
                             android:layout_weight="1"
                             android:orientation="vertical">
 
@@ -93,16 +97,16 @@
                                 android:background="@color/white"
                                 android:drawableStart="@drawable/new_form"
                                 android:drawablePadding="12dp"
-                                android:gravity="bottom"
+                                android:gravity="center_vertical"
                                 android:minWidth="460dp"
                                 android:text="@string/open_surveillance_form"
                                 android:textColor="@color/colorPrimary"
-                                android:textSize="24dp" />
+                                android:textSize="16dp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_marginStart="64dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="36dp"
                                 android:gravity="center_horizontal|center_vertical"
                                 android:text="Open to enter new surveillance form"
                                 android:textColor="@color/gray"
@@ -111,12 +115,12 @@
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:background="@drawable/ic_baseline_arrow_forward_ios_24"
                             android:gravity="center_horizontal|center_vertical"
                             android:textColor="@color/colorAccent"
                             android:layout_margin="12dp"
-                            android:textSize="56dp" />
+                            android:textSize="24dp" />
 
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -140,8 +144,8 @@
 
                         <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_margin="24dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="12dp"
                             android:layout_weight="1"
                             android:orientation="vertical">
 
@@ -152,16 +156,16 @@
                                 android:background="@color/white"
                                 android:drawableStart="@drawable/onhold_forms"
                                 android:drawablePadding="12dp"
-                                android:gravity="bottom"
+                                android:gravity="center_vertical"
                                 android:minWidth="460dp"
                                 android:text="@string/open_onhold_form"
                                 android:textColor="@color/colorPrimary"
-                                android:textSize="24dp" />
+                                android:textSize="16dp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_marginStart="64dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="36dp"
                                 android:gravity="center_horizontal|center_vertical"
                                 android:text="Update temperature of the On-Hold forms"
                                 android:textColor="@color/gray"
@@ -170,44 +174,106 @@
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:background="@drawable/ic_baseline_arrow_forward_ios_24"
                             android:gravity="center_horizontal|center_vertical"
                             android:textColor="@color/colorAccent"
                             android:layout_margin="12dp"
-                            android:textSize="56dp" />
+                            android:textSize="24dp" />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:padding="12dp"
+                    app:cardCornerRadius="24dp"
+
+                    >
+
+                    <LinearLayout
+                        android:id="@+id/openFollowup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="sectionPress"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="12dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/btnfollowup"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/white"
+                                android:drawableStart="@drawable/ic_followup_24"
+                                android:drawablePadding="12dp"
+                                android:gravity="center_vertical"
+                                android:minWidth="460dp"
+                                android:text="@string/open_followup_form"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="16dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="36dp"
+                                android:gravity="center_horizontal|center_vertical"
+                                android:text="Open to enter follow-up forms"
+                                android:textColor="@color/gray"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/ic_baseline_arrow_forward_ios_24"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:textColor="@color/colorAccent"
+                            android:layout_margin="12dp"
+                            android:textSize="24dp" />
 
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
                 <LinearLayout
+                    android:id="@+id/adminView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="24dp"
-                    android:padding="24dp"
+                    android:layout_margin="12dp"
+                    android:padding="12dp"
                     android:background="@color/grayLight"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
                         android:padding="4dp"
                         android:background="@color/colorAccentLightOverlay"
-                        android:text="ADMIN OPTIONS"/>
-            <LinearLayout
-                android:layout_marginTop="24dp"
-                android:layout_width="match_parent"
+                        android:text="ADMIN OPTIONS" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="12dp"
                 android:orientation="horizontal"
                 android:gravity="center_horizontal"
                 android:layout_height="wrap_content">
                 <TextView
                     android:id="@+id/sec1"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                    android:padding="12dp"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
                     android:background="@color/white"
                     android:shadowRadius="8"
                     android:onClick="sectionPress"
-                    android:textSize="18sp"
+                    android:textSize="14sp"
                     android:layout_margin="4dp"
                     android:elevation="1dp"
                 android:text="Section 1"/>
@@ -215,75 +281,73 @@
                     android:id="@+id/sec2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="12dp"
+                    android:padding="8dp"
                     android:background="@color/white"
                     android:shadowRadius="8"
                     android:onClick="sectionPress"
-                    android:textSize="18sp"
+                    android:text="Section 2"
                     android:layout_margin="4dp"
                     android:elevation="1dp"
-                    android:text="Section 2"/>
-                <TextView
-                    android:id="@+id/sec3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="12dp"
-                    android:background="@color/white"
-                    android:shadowRadius="8"
-                    android:onClick="sectionPress"
-                    android:layout_margin="4dp"
-                    android:textSize="18sp"
-                    android:elevation="1dp"
-                    android:text="Section 3"/>
-            </LinearLayout>
-                <LinearLayout
-                    android:layout_marginTop="24dp"
-                    android:layout_width="match_parent"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal"
-                    android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/sec4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="12dp"
-                    android:background="@color/white"
-                    android:shadowRadius="8"
-                    android:onClick="sectionPress"
+                    android:textSize="14sp" />
 
-                    android:textSize="18sp"
-                    android:layout_margin="4dp"
-                    android:elevation="1dp"
-                    android:text="Section 4"/>
-                <TextView
-                    android:id="@+id/sec5"
+                        <TextView
+                            android:id="@+id/sec3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:background="@color/white"
+                            android:elevation="1dp"
+                            android:onClick="sectionPress"
+                            android:padding="8dp"
+                            android:shadowRadius="8"
+                            android:text="Section 3"
+                            android:textSize="14sp" />
+                    </LinearLayout>
 
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="12dp"
-                    android:background="@color/white"
-                    android:shadowRadius="8"
-                    android:onClick="sectionPress"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
 
-                    android:textSize="18sp"
-                    android:layout_margin="4dp"
-                    android:elevation="1dp"
-                    android:text="Section 5"/>
+                        <TextView
+                            android:id="@+id/sec4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:background="@color/white"
+                            android:elevation="1dp"
+                            android:onClick="sectionPress"
+                            android:padding="8dp"
+                            android:shadowRadius="8"
+                            android:text="Section 4"
+                            android:textSize="14sp" />
 
-                    <TextView
-                    android:id="@+id/onhold"
+                        <TextView
+                            android:id="@+id/sec5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:background="@color/white"
+                            android:elevation="1dp"
+                            android:onClick="sectionPress"
+                            android:padding="8dp"
+                            android:shadowRadius="8"
+                            android:text="Section 5"
+                            android:textSize="14sp" />
 
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="12dp"
-                    android:background="@color/white"
-                    android:shadowRadius="8"
-                    android:onClick="sectionPress"
-
-                    android:textSize="18sp"
-                    android:layout_margin="4dp"
-                    android:elevation="1dp"
-                    android:text="OnHold's List"/>
+                        <TextView
+                            android:id="@+id/onhold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:background="@color/white"
+                            android:elevation="1dp"
+                            android:onClick="sectionPress"
+                            android:padding="8dp"
+                            android:shadowRadius="8"
+                            android:text="OnHold's List"
+                            android:textSize="14sp" />
 
 
             </LinearLayout>

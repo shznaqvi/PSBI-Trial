@@ -33,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
         bi.setCallback(this);
         sp = getSharedPreferences("onhold", MODE_PRIVATE);
         bi.btnOnHold.setText("UPDATE ONHOLD FORM -- (" + sp.getAll().size() + ")");
+
+        bi.adminView.setVisibility(MainApp.admin?View.VISIBLE:View.GONE);
+        bi.username.setText("Welcome, "+MainApp.user.getFullname()+"!");
     }
 
     public void sectionPress(View view) {

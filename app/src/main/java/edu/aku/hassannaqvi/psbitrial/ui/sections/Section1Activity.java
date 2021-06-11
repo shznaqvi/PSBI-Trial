@@ -41,6 +41,7 @@ public class Section1Activity extends AppCompatActivity {
         bi.setForm(MainApp.form);
         setSupportActionBar(bi.toolbar);
         setTitle(R.string.section1_mainheading);
+        setImmersive(true);
 
         db = MainApp.appInfo.dbHelper;
 
@@ -89,6 +90,8 @@ public class Section1Activity extends AppCompatActivity {
                 : bi.tsf10502.isChecked() ? "2"
                 : bi.tsf10503.isChecked() ? "3"
                 : "-1");
+        form.setTsf10596x(bi.tsf10596x.getText().toString());
+
         form.setTsf106(bi.tsf106.getText().toString());
         form.setTsf107(bi.tsf107.getText().toString());
         form.setTsf108(bi.tsf108.getText().toString());

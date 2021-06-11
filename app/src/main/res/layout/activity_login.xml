@@ -40,7 +40,7 @@
             <LinearLayout
                 android:layout_width="480px"
                 android:layout_height="wrap_content"
-
+android:radius="8dp"
                 android:layout_gravity="center"
                 android:background="@color/white"
                 android:gravity="center"

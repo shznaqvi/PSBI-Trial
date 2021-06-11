@@ -29,6 +29,7 @@ import static edu.aku.hassannaqvi.psbitrial.core.MainApp.form;
 import static edu.aku.hassannaqvi.psbitrial.utils.DateUtilsKt.dobDiffInDays;
 import static edu.aku.hassannaqvi.psbitrial.utils.DateUtilsKt.getCalDate;
 import static edu.aku.hassannaqvi.psbitrial.utils.DateUtilsKt.getDateDiff;
+import static edu.aku.hassannaqvi.psbitrial.utils.DateUtilsKt.getMonthsBack;
 
 public class Section2Activity extends AppCompatActivity {
     ActivitySection2Binding bi;
@@ -44,6 +45,8 @@ public class Section2Activity extends AppCompatActivity {
         setTitle(R.string.section2_mainheading);
 
         db = MainApp.appInfo.dbHelper;
+
+        bi.tsf201.setMinDate(getMonthsBack("yyyy-MM-dd", 2));
 
     }
 

@@ -23,11 +23,14 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:elevation="4dp"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
             android:theme="@style/ToolbarTheme"
-            app:titleTextAppearance="@style/ToolbarTheme" />
+            app:subtitle="To be filled by Study physician for (0 days – 59days) OPD/ER/Inpatient"
+            app:titleTextAppearance="@style/Toolbar.TitleText"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -49,12 +52,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <TextView
-                            style="@style/info"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="To be filled by Study physician for (0 days – 59days) OPD/ER/Inpatient" />
+
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -271,6 +269,16 @@
                                 android:layout_weight="1"
                                 android:text="@string/tsf10503" />
                         </RadioGroup>
+                        <EditText
+                            android:id="@+id/tsf10596x"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:digits="AaBaCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789,. "
+                            android:hint="@string/tsf10503"
+                            android:tag="tsf10596"
+                            android:text='@{tsf10503.checked ? tsf10596x.getText().toString() : ""}'
+                            android:visibility='@{tsf10503.checked? View.VISIBLE : View.GONE}' />
+
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 

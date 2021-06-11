@@ -120,7 +120,7 @@
         <item name="android:layout_marginBottom">4dp</item>
         <item name="android:elevation">1dp</item>
         <item name="android:background">@drawable/options_separator</item>
-        <item name="android:textColor">@color/grayDark</item>
+        <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:paddingStart">24dp</item>
         <item name="android:paddingEnd">8dp</item>
@@ -285,13 +285,7 @@
 
     <style name="Summary_Layout" parent="Theme.AppCompat.Light.DarkActionBar"></style>
 
-    <style name="ToolbarTheme">
-        <item name="titleTextAppearance">@style/ToolbarTheme.Title</item>
-    </style>
 
-    <style name="ToolbarTheme.Title" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
-        <item name="android:textColor">@color/colorAccent</item>
-    </style>
 
     <style name="MyDatePickerDialogTheme" parent="Theme.AppCompat.Light.Dialog">
         <!-- this is new -->
@@ -310,6 +304,36 @@
         <item name="android:minDate">01/01/2000</item>
     </style>
 
+    <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <!-- android:textColorPrimary is the color of the title text in the Toolbar  -->
+        <item name="android:textColorPrimary">@color/white</item>
+        <!-- actionMenuTextColor is the color of the text of action (menu) items  -->
+        <item name="actionMenuTextColor">@color/white</item>
+        <!-- Tints the input fields like checkboxes and text fields -->
+        <item name="colorAccent">@color/colorAccent</item>
+        <!-- Applies to views in their normal state. -->
+        <item name="colorControlNormal">@color/colorPrimary</item>
+        <!-- Applies to views in their activated state (i.e checked or switches) -->
+        <item name="colorControlActivated">@color/colorAccentLight</item>
+        <!-- Applied to framework control highlights (i.e ripples or list selectors) -->
+        <item name="colorControlHighlight">@color/colorAccent</item>
+
+        <!-- Enable these below if you want clicking icons to trigger a ripple effect -->
+        <!--
+        <item name="selectableItemBackground">?android:selectableItemBackground</item>
+        <item name="selectableItemBackgroundBorderless">?android:selectableItemBackground</item>
+        -->
+    </style>
+
+    <!-- This configures the styles for the title within the Toolbar  -->
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="Toolbar.SubTitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Subtitle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">italic</item>
+    </style>
 
 
 </resources>

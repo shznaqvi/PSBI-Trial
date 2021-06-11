@@ -89,8 +89,8 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/tsf301"
                             android:inputType="number"
-                            app:maxValue="44"
-                            app:minValue="24"
+                            app:maxValue="90"
+                            app:minValue="25"
                             app:type="range" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>

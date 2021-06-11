@@ -1,12 +1,13 @@
 package edu.aku.hassannaqvi.psbitrial.ui.sections;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import com.validatorcrawler.aliazaz.Validator;
 
@@ -15,7 +16,6 @@ import edu.aku.hassannaqvi.psbitrial.contracts.TableContracts;
 import edu.aku.hassannaqvi.psbitrial.core.MainApp;
 import edu.aku.hassannaqvi.psbitrial.database.DatabaseHelper;
 import edu.aku.hassannaqvi.psbitrial.databinding.ActivitySection4Binding;
-import edu.aku.hassannaqvi.psbitrial.models.Form;
 
 import static edu.aku.hassannaqvi.psbitrial.core.MainApp.form;
 
@@ -27,12 +27,41 @@ public class Section4Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         bi = DataBindingUtil.setContentView(this, R.layout.activity_section4);
         bi.setCallback(this);
+        setListeners();
         //MainApp.form = new Form();
         bi.setForm(MainApp.form);
         setSupportActionBar(bi.toolbar);
         setTitle(R.string.section4_mainheading);
 
         db = MainApp.appInfo.dbHelper;
+
+    }
+
+    private void setListeners() {
+        //  bi.tsf40104.setOnCheckedChangeListener((radioGroup, i) -> Clear.clearAllFields(bi.fldGrpCVtsf402));
+
+
+        bi.tsf40104.setOnCheckedChangeListener((compoundButton, isChecked) -> {
+            if (isChecked) {
+                Toast.makeText(this, "checked", Toast.LENGTH_SHORT).show();
+                bi.fldGrpCVtsf402.setVisibility(View.GONE);
+                bi.tsf40201.setChecked(false);
+                bi.tsf40202.setChecked(false);
+                bi.tsf40203.setChecked(false);
+                bi.tsf40204.setChecked(false);
+                bi.tsf40205.setChecked(false);
+                bi.tsf40206.setChecked(false);
+                bi.tsf40207.setChecked(false);
+                bi.tsf40208.setChecked(false);
+                bi.tsf40209.setChecked(false);
+                bi.tsf40298.setChecked(false);
+            } else {
+                Toast.makeText(this, "checked false", Toast.LENGTH_SHORT).show();
+                bi.fldGrpCVtsf402.setVisibility(View.VISIBLE);
+
+            }
+        });
+
     }
 
     public void btnContinue(View view) {
@@ -42,7 +71,8 @@ public class Section4Activity extends AppCompatActivity {
             Toast.makeText(this, "Patient Added.", Toast.LENGTH_SHORT).show();
             finish();
             Intent i = new Intent(this, Section5Activity.class);
-            startActivity(i);        }
+            startActivity(i);
+        }
     }
 
     public void btnEnd(View view) {

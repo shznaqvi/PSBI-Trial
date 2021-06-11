@@ -29,6 +29,7 @@ public class Form extends BaseObservable {
     public String tsf103;
     public String tsf104;
     public String tsf105;
+    public String tsf10596x;
     public String tsf106 = "";
     public String tsf107;
     public String tsf108;
@@ -175,6 +176,15 @@ public class Form extends BaseObservable {
         notifyPropertyChanged(BR.tsf105);
     }
 
+    @Bindable
+    public String getTsf10596x() {
+        return tsf10596x;
+    }
+
+    public void setTsf10596x(String tsf10596x) {
+        this.tsf10596x = tsf10596x;
+        notifyPropertyChanged(BR.tsf10596x);
+    }
     @Bindable
     public String getTsf106() {
         return tsf106;
@@ -1045,6 +1055,7 @@ public class Form extends BaseObservable {
                 this.tsf103 = json.getString("tsf103");
                 this.tsf104 = json.getString("tsf104");
                 this.tsf105 = json.getString("tsf105");
+                this.tsf10596x = json.getString("tsf10596x");
                 this.tsf106 = json.getString("tsf106");
                 this.tsf107 = json.getString("tsf107");
                 this.tsf108 = json.getString("tsf108");
@@ -1183,6 +1194,7 @@ public class Form extends BaseObservable {
                     .put("tsf103", tsf103)
                     .put("tsf104", tsf104)
                     .put("tsf105", tsf105)
+                    .put("tsf10596x", tsf10596x)
                     .put("tsf106", tsf106)
                     .put("tsf107", tsf107)
                     .put("tsf108", tsf108)
