@@ -32,6 +32,7 @@ import static edu.aku.hassannaqvi.psbitrial.utils.DateUtilsKt.getDateDiff;
 import static edu.aku.hassannaqvi.psbitrial.utils.DateUtilsKt.getMonthsBack;
 
 public class Section2Activity extends AppCompatActivity {
+    private static final String TAG = "Section2Activity";
     ActivitySection2Binding bi;
     private DatabaseHelper db;
     @Override
@@ -45,8 +46,12 @@ public class Section2Activity extends AppCompatActivity {
         setTitle(R.string.section2_mainheading);
 
         db = MainApp.appInfo.dbHelper;
+        Calendar cal = Calendar.getInstance();
+        cal.getTime();
+        cal.add(Calendar.MONTH, -2);
 
-        bi.tsf201.setMinDate(getMonthsBack("yyyy-MM-dd", 2));
+       //Log.d(TAG, "onCreate: "+getMonthsBack("MM/dd/yyyy", 2));
+        bi.tsf201.setMinDate(getMonthsBack("dd/MM/yyyy", -2));
 
     }
 

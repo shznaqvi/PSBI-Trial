@@ -130,11 +130,9 @@
                             android:inputType="number"
                             app:mask="###-##-##"
                             app:maxValue="9999999"
-                            app:minValue="0">
-
-                            <requestFocus />
-                        </com.edittextpicker.aliazaz.EditTextPicker>
+                            app:minValue="0"
                             android:hint="@string/tsf102" />
+
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
