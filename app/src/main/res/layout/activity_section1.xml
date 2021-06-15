@@ -85,10 +85,13 @@
                                 android:text="@string/tsf101" />
                         </LinearLayout>
 
-                        <EditText
+                        <com.edittextpicker.aliazaz.EditTextPicker
                             android:id="@+id/tsf101"
+                            style="@style/textInput"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:inputType="number"
+                            app:mask="##-###"
                             android:hint="@string/tsf101" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>

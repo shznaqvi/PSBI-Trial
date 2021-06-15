@@ -71,12 +71,12 @@ public class OnholdForm extends AppCompatActivity {
         Log.d("TAG", "updateDB: "+updCount);
         if (updCount > 0) {
             updateOnHoldList();
-            Toast.makeText(this, "Temperature Updated for MR.No.: " +mrno, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Temperature Updated for Assessment.No.: " +mrno, Toast.LENGTH_LONG).show();
 
             return true;
         } else {
-            Toast.makeText(this, "MR.No Incorrect or not on hold.", Toast.LENGTH_LONG).show();
-            bi.mrno.setError("MR.No Incorrect or not on hold.");
+            Toast.makeText(this, "Assessment.No Incorrect or not on hold.", Toast.LENGTH_LONG).show();
+            bi.mrno.setError("Assessment.No Incorrect or not on hold.");
             return false;
         }
     }

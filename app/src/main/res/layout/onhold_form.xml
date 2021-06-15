@@ -118,9 +118,8 @@
 
                             android:layout_weight="1"
                             android:inputType="number"
-                            app:mask="############"
-                            app:maxValue="999999999999"
-                            app:minValue="0">
+                            app:mask="##-###"
+                           >
 
                             <requestFocus />
                         </com.edittextpicker.aliazaz.EditTextPicker>
