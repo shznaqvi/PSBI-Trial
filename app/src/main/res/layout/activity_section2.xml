@@ -328,6 +328,12 @@
                             android:layout_marginEnd="12dp"
                             android:orientation="horizontal">
 
+                            <CheckBox
+                                android:id="@+id/tsf206c1Check"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                 />
+
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -344,6 +350,9 @@
                                     android:id="@+id/tsf206c1"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:visibility="@{tsf206c1Check.checked?View.VISIBLE:View.GONE}"
+                                    android:text='@{tsf206c1Check.checked ?null:""}'
+                                    android:tag='@{tsf206c1Check.checked ?"tsf206c1Check":-1}'
                                     android:hint="@string/tsf206c1" />
 
                             </LinearLayout>
@@ -352,6 +361,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="2dp"
+                                android:visibility="@{tsf206c1Check.checked?View.VISIBLE:View.GONE}"
                                 android:orientation="vertical">
 
                                 <TextView
@@ -368,6 +378,7 @@
                                     android:inputType="number"
                                     app:maxValue="7"
                                     app:minValue="1"
+                                    android:text='@{tsf206c1Check.checked ?null:""}'
                                     app:type="range" />
 
 
@@ -380,7 +391,12 @@
                             android:layout_marginStart="12dp"
                             android:layout_marginEnd="12dp"
                             android:orientation="horizontal">
-
+                            <CheckBox
+                                android:id="@+id/tsf206c2Check"
+                                android:layout_width="wrap_content"
+                                android:tag="-1"
+                                android:layout_height="match_parent"
+                                />
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -397,7 +413,10 @@
                                     android:id="@+id/tsf206c2"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:hint="@string/tsf206c2" />
+                                    android:hint="@string/tsf206c2"
+                                    android:visibility="@{tsf206c2Check.checked?View.VISIBLE:View.GONE}"
+                                    android:tag='@{tsf206c2Check.checked ?"tsf206c2Check":-1}'
+                                    android:text='@{tsf206c2Check.checked ?null:""}' />
 
                             </LinearLayout>
 
@@ -405,6 +424,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="2dp"
+                                android:visibility="@{tsf206c2Check.checked?View.VISIBLE:View.GONE}"
+
                                 android:orientation="vertical">
 
                                 <TextView
@@ -421,6 +442,8 @@
                                     android:inputType="number"
                                     app:maxValue="7"
                                     app:minValue="1"
+                                    android:text='@{tsf206c2Check.checked ?null:""}'
+
                                     app:type="range" />
 
 
@@ -434,7 +457,13 @@
                             android:layout_marginStart="12dp"
                             android:layout_marginEnd="12dp"
                             android:orientation="horizontal">
+                            <CheckBox
+                                android:id="@+id/tsf206c3Check"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:tag="-1"
 
+                                />
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -451,6 +480,10 @@
                                     android:id="@+id/tsf206c3"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:visibility="@{tsf206c3Check.checked?View.VISIBLE:View.GONE}"
+                                    android:text='@{tsf206c3Check.checked ?null:""}'
+                                    android:tag='@{tsf206c3Check.checked ?"tsf206c3Check":-1}'
+
                                     android:hint="@string/tsf206c1" />
 
                             </LinearLayout>
@@ -459,6 +492,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="2dp"
+                                android:visibility="@{tsf206c3Check.checked?View.VISIBLE:View.GONE}"
+
                                 android:orientation="vertical">
 
                                 <TextView
@@ -475,6 +510,7 @@
                                     android:inputType="number"
                                     app:maxValue="7"
                                     app:minValue="1"
+                                    android:text='@{tsf206c3Check.checked ?null:""}'
                                     app:type="range" />
 
 
@@ -487,7 +523,13 @@
                             android:layout_marginStart="12dp"
                             android:layout_marginEnd="12dp"
                             android:orientation="horizontal">
+                            <CheckBox
+                                android:id="@+id/tsf206c4Check"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:tag="-1"
 
+                                />
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -504,6 +546,10 @@
                                     android:id="@+id/tsf206c4"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:visibility="@{tsf206c4Check.checked?View.VISIBLE:View.GONE}"
+                                    android:text='@{tsf206c4Check.checked ?null:""}'
+                                    android:tag='@{tsf206c4Check.checked ?"tsf206c4Check":-1}'
+
                                     android:hint="@string/tsf206c1" />
 
                             </LinearLayout>
@@ -512,6 +558,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="2dp"
+                                android:visibility="@{tsf206c4Check.checked?View.VISIBLE:View.GONE}"
                                 android:orientation="vertical">
 
                                 <TextView
@@ -528,6 +575,7 @@
                                     android:inputType="number"
                                     app:maxValue="7"
                                     app:minValue="1"
+                                    android:text='@{tsf206c4Check.checked ?null:""}'
                                     app:type="range" />
 
 

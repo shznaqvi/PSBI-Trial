@@ -50,15 +50,15 @@ public class Section5Activity extends AppCompatActivity {
     }
 
     public void btnEnd(View view) {
-        if (!formValidation()) return;
         saveDraft();
         if (updateDB()) {
-            Toast.makeText(this, "Patient Added.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Patient information not recorded.", Toast.LENGTH_SHORT).show();
             finish();
             Intent i = new Intent(this, EndingActivity.class);
-            i.putExtra("complete",true);
+            i.putExtra("complete",false);
             startActivity(i);
         }
+
 
     }
 
@@ -69,6 +69,8 @@ public class Section5Activity extends AppCompatActivity {
 
         // MainApp.form is only initialised at first section
         //MainApp.form = new Form();
+
+
         form.setTsf501(bi.tsf501.getText().toString());
         form.setTsf502( bi.tsf50201.isChecked() ? "1"
                 : bi.tsf50202.isChecked() ? "2"

@@ -128,8 +128,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="number"
-                            app:mask="###-##-##"
-                            app:maxValue="9999999"
+                            app:mask="############"
+                            app:maxValue="999999999999"
                             app:minValue="0"
                             android:hint="@string/tsf102" />
 
@@ -317,8 +317,8 @@
                             android:hint="YYYY-MM-DD"
                             android:inputType="number"
                             app:dateFormat="yyyy-MM-dd"
+                            app:minDate="01/05/2021"
                             app:maxDate="CR_DATE"
-                            app:minDate="CR_DATE"
                             app:theme="@style/MyDatePickerDialogTheme" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>

@@ -70,11 +70,13 @@ public class Section3Activity extends AppCompatActivity {
 
     public void btnEnd(View view) {
         saveDraft();
-
-        Intent i = new Intent(this, EndingActivity.class);
-        i.putExtra("complete",false);
-        startActivity(i);
-
+        if (updateDB()) {
+            Toast.makeText(this, "Patient information not recorded.", Toast.LENGTH_SHORT).show();
+            finish();
+            Intent i = new Intent(this, EndingActivity.class);
+            i.putExtra("complete",false);
+            startActivity(i);
+        }
     }
 
     private boolean formValidation() {
@@ -169,10 +171,10 @@ public class Section3Activity extends AppCompatActivity {
                 Date currentTime = Calendar.getInstance().getTime();
                 SharedPreferences sp = getSharedPreferences("onhold", MODE_PRIVATE);
                 SharedPreferences.Editor spEdit = sp.edit();
-                spEdit.putString(form.getMrNo(), currentTime.toString());
+                spEdit.putString(form.getAssessNo(), currentTime.toString());
                 spEdit.apply();
                 form.setiStatus("9");
-                Toast.makeText(this, form.getInfantName()+" ("+form.getMrNo()+") has been added to On-Hold List!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, form.getInfantName()+" ("+form.getAssessNo()+") has been added to On-Hold List!", Toast.LENGTH_SHORT).show();
             }
             return true;
         } else {

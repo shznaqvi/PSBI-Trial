@@ -34,22 +34,37 @@
             android:id="@+id/onholdlist"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:background="@color/colorAccentLightOverlay"
+            android:textSize="14sp"
+
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/pendinglist"
+            android:layout_margin="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/colorPrimaryLightOverlay"
+            android:textColor="@color/gray"
+            android:textSize="14sp"
+            android:textStyle="italic"
             android:layout_weight="1" />
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/layout_root"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|center_vertical"
             android:layout_margin="24dp"
+
+
+            android:layout_gravity="center_horizontal|center_vertical"
             android:background="@drawable/all_round_corners"
             android:backgroundTint="@color/grayLight"
             android:elevation="8dp"
-            android:minWidth="640dp"
-            android:minHeight="480dp"
             android:orientation="vertical"
-            android:padding="24dp"
             app:layout_constraintCircleRadius="24dp">
 
             <LinearLayout
@@ -58,18 +73,13 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    style="@style/sub_labels"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="TEMPERATURE"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                    android:textColor="@color/colorPrimary" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:padding="4dp"
-                    android:src="@drawable/ic_close" />
             </LinearLayout>
 
             <androidx.cardview.widget.CardView
@@ -85,45 +95,65 @@
                     android:background="@color/grayLight"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/textView1"
-                        style="@style/labels"
-                        android:text="@string/tsf102" />
-
-
-                    <com.edittextpicker.aliazaz.EditTextPicker
-                        android:id="@+id/mrno"
-                        style="@style/textInput"
-                        android:layout_width="match_parent"
-                        android:inputType="number"
-                        app:mask="###-##-##"
-                        app:minValue="0"
-                        app:maxValue="9999999"
-                        android:layout_height="wrap_content">
-
-                        <requestFocus />
-                    </com.edittextpicker.aliazaz.EditTextPicker>
-
-
-                    <TextView
-                        style="@style/labels"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="@string/tsf305" />
-
-
-                    <com.edittextpicker.aliazaz.EditTextPicker
-                        android:id="@+id/tsf305"
-                        style="@style/textInput"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/tsf305"
-                        android:inputType="number"
-                        app:mask="##.#"
-                        app:maxValue="99"
-                        app:minValue="1"
-                        app:type="range" />
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView1"
+                            style="@style/labels"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/tsf101" />
+
+
+                        <com.edittextpicker.aliazaz.EditTextPicker
+                            android:id="@+id/mrno"
+                            style="@style/textInput"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+
+                            android:layout_weight="1"
+                            android:inputType="number"
+                            app:mask="############"
+                            app:maxValue="999999999999"
+                            app:minValue="0">
+
+                            <requestFocus />
+                        </com.edittextpicker.aliazaz.EditTextPicker>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/labels"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_marginTop="0dp"
+                            android:text="@string/tsf305" />
+
+
+                        <com.edittextpicker.aliazaz.EditTextPicker
+                            android:id="@+id/tsf305"
+                            style="@style/textInput"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:hint="@string/tsf305"
+                            android:inputType="number"
+                            app:mask="##.#"
+                            app:maxValue="99"
+                            app:minValue="1"
+                            app:type="range" />
+                    </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -132,13 +162,13 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginTop="24dp"
+                android:gravity="end"
                 android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/btn_End"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:onClick="btnEnd"
                     android:text="Cancel"
@@ -148,9 +178,11 @@
 
                 <Button
                     android:id="@+id/btn_Continue"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:layout_marginStart="24dp"
                     android:background="@drawable/capsule"
                     android:backgroundTint="@color/colorAccent"
                     android:backgroundTintMode="src_atop"

@@ -1,5 +1,6 @@
 package edu.aku.hassannaqvi.psbitrial.ui;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -24,6 +25,12 @@ import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -37,6 +44,7 @@ import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 import javax.crypto.Cipher;
@@ -75,10 +83,25 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Dexter.withContext(this)
+                .withPermissions(
+                        Manifest.permission.ACCESS_NETWORK_STATE,
+                        Manifest.permission.WAKE_LOCK,
+                        Manifest.permission.INTERNET,
+                        Manifest.permission.READ_PHONE_STATE
+                ).withListener(new MultiplePermissionsListener() {
+            @Override public void onPermissionsChecked(MultiplePermissionsReport report) {
+                if(report.areAllPermissionsGranted()){
+                    MainApp.permissionCheck = true;
+                }
+            }
+            @Override public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                token.continuePermissionRequest();
+            }
+        }).check();
         bi = DataBindingUtil.setContentView(this, R.layout.activity_login);
         bi.setCallback(this);
         MainApp.appInfo = new AppInfo(this);
-
         db = MainApp.appInfo.getDbHelper();
         MainApp.user = new Users();
         bi.txtinstalldate.setText(MainApp.appInfo.getAppInfo());

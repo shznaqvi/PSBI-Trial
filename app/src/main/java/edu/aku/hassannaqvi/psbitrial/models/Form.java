@@ -37,7 +37,7 @@ public class Form extends BaseObservable {
     public String tsf110;
     public String tsf111;
     public String tsf112;
-    public String tsf20503;
+   // public String tsf20503;
     public String tsf201;
     public String tsf202;
     public String tsf203;
@@ -101,6 +101,7 @@ public class Form extends BaseObservable {
     private String uid = StringUtils.EMPTY;
     private String userName = StringUtils.EMPTY;
     private String sysDate = StringUtils.EMPTY;
+    private String assessNo = StringUtils.EMPTY;
     private String mrNo = StringUtils.EMPTY;
     private String infantName = StringUtils.EMPTY;
 
@@ -131,6 +132,7 @@ public class Form extends BaseObservable {
 
     public void setTsf101(String tsf101) {
         this.tsf101 = tsf101;
+        this.assessNo = tsf101;
         notifyPropertyChanged(BR.tsf101);
     }
 
@@ -255,7 +257,7 @@ public class Form extends BaseObservable {
         notifyPropertyChanged(BR.tsf112);
     }
 
-    @Bindable
+/*    @Bindable
     public String getTsf20503() {
         return tsf20503;
     }
@@ -263,7 +265,7 @@ public class Form extends BaseObservable {
     public void setTsf20503(String tsf20503) {
         this.tsf20503 = tsf20503;
         notifyPropertyChanged(BR.tsf20503);
-    }
+    }*/
 
     @Bindable
     public String getTsf201() {
@@ -905,6 +907,14 @@ public class Form extends BaseObservable {
         this.mrNo = mrNo;
     }
 
+    public String getAssessNo() {
+        return assessNo;
+    }
+
+    public void setAssessNo(String assessNo) {
+        this.assessNo = assessNo;
+    }
+
     public String getInfantName() {
         return infantName;
     }
@@ -1024,6 +1034,7 @@ public class Form extends BaseObservable {
         this.userName = cursor.getString(cursor.getColumnIndex(FormsTable.COLUMN_USERNAME));
         this.sysDate = cursor.getString(cursor.getColumnIndex(FormsTable.COLUMN_SYSDATE));
         this.mrNo = cursor.getString(cursor.getColumnIndex(FormsTable.COLUMN_MR_NUMBER));
+        this.assessNo = cursor.getString(cursor.getColumnIndex(FormsTable.COLUMN_ASSESMENT_NO));
         this.infantName = cursor.getString(cursor.getColumnIndex(FormsTable.COLUMN_INFANT_NAME));
         this.tsf305 = cursor.getString(cursor.getColumnIndex(FormsTable.COLUMN_TSF305));
 ;
@@ -1071,14 +1082,14 @@ public class Form extends BaseObservable {
     }
 
     public void s2Hydrate(String string) {
-
+        Log.d(TAG, "s2Hydrate: "+string);
         if (string != null) {
 
             try {
                 JSONObject json = null;
                 json = new JSONObject(string);
 
-                this.tsf20503 = json.getString("tsf20503");
+             //   this.tsf20503 = json.getString("tsf20503");
                 this.tsf201 = json.getString("tsf201");
                 this.tsf202 = json.getString("tsf202");
                 this.tsf203 = json.getString("tsf203");
@@ -1214,7 +1225,8 @@ public class Form extends BaseObservable {
         JSONObject json = new JSONObject();
 
         try {
-         json.put("tsf20503", tsf20503)
+         json
+      //           .put("tsf20503", tsf20503)
                     .put("tsf201", tsf201)
                     .put("tsf202", tsf202)
                     .put("tsf203", tsf203)
@@ -1245,7 +1257,7 @@ public class Form extends BaseObservable {
                  .put("tsf302", tsf302)
                  .put("tsf303", tsf303)
                  .put("tsf304", tsf304)
-                // .put("tsf305", tsf305) commented because moved out of json
+                // .put("tsf305", tsf305) commented because temp. recheck moved out of json
                  .put("tsf306", tsf306)
                  .put("tsf307", tsf307)
                  .put("tsf308", tsf308)
@@ -1324,16 +1336,19 @@ public class Form extends BaseObservable {
             json.put(FormsTable.COLUMN_UID, this.uid);
             json.put(FormsTable.COLUMN_USERNAME, this.userName);
             json.put(FormsTable.COLUMN_SYSDATE, this.sysDate);
+            json.put(FormsTable.COLUMN_ASSESMENT_NO, this.mrNo);
             json.put(FormsTable.COLUMN_MR_NUMBER, this.mrNo);
+            json.put(FormsTable.COLUMN_ASSESMENT_NO, this.assessNo);
             json.put(FormsTable.COLUMN_INFANT_NAME, this.infantName);
             json.put(FormsTable.COLUMN_TSF305, this.tsf305);
             json.put(FormsTable.COLUMN_DEVICEID, this.deviceId);
             json.put(FormsTable.COLUMN_DEVICETAGID, this.deviceTag);
             json.put(FormsTable.COLUMN_ISTATUS, this.iStatus);
-            json.put(FormsTable.COLUMN_SYNCED, this.synced);
-            json.put(FormsTable.COLUMN_SYNCED_DATE, this.syncDate);
+          //  json.put(FormsTable.COLUMN_SYNCED, this.synced);
+          //  json.put(FormsTable.COLUMN_SYNCED_DATE, this.syncDate);
 
             json.put(FormsTable.COLUMN_S1, new JSONObject(s1toString()));
+            Log.d(TAG, "toJSONObject: "+new JSONObject(s2toString()));
             json.put(FormsTable.COLUMN_S2, new JSONObject(s2toString()));
             json.put(FormsTable.COLUMN_S3, new JSONObject(s3toString()));
             json.put(FormsTable.COLUMN_S4, new JSONObject(s4toString()));

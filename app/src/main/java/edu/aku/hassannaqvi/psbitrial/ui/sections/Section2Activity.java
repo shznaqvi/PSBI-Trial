@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.validatorcrawler.aliazaz.Validator;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -29,6 +30,7 @@ import static edu.aku.hassannaqvi.psbitrial.core.MainApp.form;
 import static edu.aku.hassannaqvi.psbitrial.utils.DateUtilsKt.dobDiffInDays;
 import static edu.aku.hassannaqvi.psbitrial.utils.DateUtilsKt.getCalDate;
 import static edu.aku.hassannaqvi.psbitrial.utils.DateUtilsKt.getDateDiff;
+import static edu.aku.hassannaqvi.psbitrial.utils.DateUtilsKt.getDaysBack;
 import static edu.aku.hassannaqvi.psbitrial.utils.DateUtilsKt.getMonthsBack;
 
 public class Section2Activity extends AppCompatActivity {
@@ -44,14 +46,29 @@ public class Section2Activity extends AppCompatActivity {
         bi.setForm(MainApp.form);
         setSupportActionBar(bi.toolbar);
         setTitle(R.string.section2_mainheading);
+      db = MainApp.appInfo.dbHelper;
 
-        db = MainApp.appInfo.dbHelper;
         Calendar cal = Calendar.getInstance();
-        cal.getTime();
-        cal.add(Calendar.MONTH, -2);
+        try {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 
-       //Log.d(TAG, "onCreate: "+getMonthsBack("MM/dd/yyyy", 2));
-        bi.tsf201.setMinDate(getMonthsBack("dd/MM/yyyy", -2));
+            cal.setTime(sdf.parse(form.getTsf106()));// all done
+          //  Date calDate = cal.getTime();
+            cal.add(Calendar.DAY_OF_YEAR, -59);
+
+            sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
+            String todate = sdf.format(cal.getTime());
+            Log.d(TAG, "onCreate: "+todate);
+
+            bi.tsf201.setMinDate(todate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+     //   cal.getTime();
+
+
 
     }
 
@@ -64,16 +81,19 @@ public class Section2Activity extends AppCompatActivity {
             Toast.makeText(this, "Patient Added.", Toast.LENGTH_SHORT).show();
             finish();
             Intent i = new Intent(this, Section3Activity.class);
-                    startActivity(i);
+            startActivity(i);
         }
     }
 
     public void btnEnd(View view) {
         saveDraft();
-
-        Intent i = new Intent(this, EndingActivity.class);
-        i.putExtra("complete",false);
-        startActivity(i);
+        if (updateDB()) {
+            Toast.makeText(this, "Patient information not recorded.", Toast.LENGTH_SHORT).show();
+            finish();
+            Intent i = new Intent(this, EndingActivity.class);
+            i.putExtra("complete",false);
+            startActivity(i);
+        }
 
     }
 
@@ -84,6 +104,8 @@ public class Section2Activity extends AppCompatActivity {
 
         // MainApp.form is only initialised at first section
         //MainApp.form = new Form();
+
+
         form.setTsf201(bi.tsf201.getText().toString());
 
         form.setTsf202(bi.tsf202.getText().toString());
@@ -115,7 +137,7 @@ public class Section2Activity extends AppCompatActivity {
 
     private boolean updateDB() {
         // THIS FUNCTION IS NOT SAME AS INSERTNEWRECORD() in FIRST SECTION
-
+db = MainApp.appInfo.dbHelper;
         long updCount = db.updatesFormColumn(FormsTable.COLUMN_S2, MainApp.form.getS2());
 
         // Chech if Form inserted into the database
@@ -177,9 +199,9 @@ public class Section2Activity extends AppCompatActivity {
                 form.setTsf106(todayDate);}
 
             getCalDate(form.getTsf106());
-            int ageindayss = dobDiffInDays(
-                    getCalDate(form.getTsf106()),
-                    getCalDate( bi.tsf201.getText().toString()));
+            int ageindayss = dobDiffInDays(getCalDate( bi.tsf201.getText().toString()),
+                    getCalDate(form.getTsf106())
+                    );
             bi.tsf202.setText(String.valueOf(ageindayss));
         }
 

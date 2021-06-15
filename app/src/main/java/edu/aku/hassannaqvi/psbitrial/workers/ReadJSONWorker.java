@@ -89,7 +89,7 @@ public class ReadJSONWorker extends Worker {
 
             db = MainApp.appInfo.dbHelper;
             try {
-                Log.d(TAG, "doWork: JSON: "+result);
+            //    Log.d(TAG, "doWork: JSON: "+result);
                 db.syncZStandard(new JSONArray(result.toString()));
                 return Result.success(data);
             } catch (JSONException e) {

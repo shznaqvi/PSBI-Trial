@@ -2,6 +2,7 @@ package edu.aku.hassannaqvi.psbitrial.ui.sections;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -13,9 +14,12 @@ import com.validatorcrawler.aliazaz.Validator;
 import org.apache.commons.lang3.StringUtils;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
+import edu.aku.hassannaqvi.psbitrial.MainActivity;
 import edu.aku.hassannaqvi.psbitrial.R;
 import edu.aku.hassannaqvi.psbitrial.contracts.TableContracts;
 import edu.aku.hassannaqvi.psbitrial.core.MainApp;
@@ -29,6 +33,7 @@ import static edu.aku.hassannaqvi.psbitrial.core.MainApp.form;
 
 public class Section1Activity extends AppCompatActivity {
 
+    private static final String TAG = "Section1Activity";
     ActivitySection1Binding bi;
     private DatabaseHelper db;
 
@@ -61,21 +66,35 @@ public class Section1Activity extends AppCompatActivity {
     }
 
     public void btnEnd(View view) {
-        saveDraft();
-
-        Intent i = new Intent(this, EndingActivity.class);
-        i.putExtra("complete",false);
-        startActivity(i);
+        //saveDraft();
+       /// if ((insertNewRecord())) {
+            Toast.makeText(this, "Patient information not recorded.", Toast.LENGTH_SHORT).show();
+            finish();
+            Intent i = new Intent(this, MainActivity.class);
+         //   i.putExtra("complete",false);
+            startActivity(i);
+    //    }
 
     }
 
     private boolean formValidation() {
-        return Validator.emptyCheckingContainer(this, bi.GrpName);
+        Log.d(TAG, "formValidation: "+db.getFormByAssessNo(bi.tsf101.getText().toString(), " (1,9) "));
+        if(!Validator.emptyCheckingContainer(this, bi.GrpName)){
+            return false;
+        } else if (db.getFormByAssessNo(bi.tsf101.getText().toString(), " (1,9) ") != null){
+
+            Validator.emptyCustomTextBox(this, bi.tsf101, "Assessment No. already exists!");
+            return false;
+        } else return true;
+
     }
+
+
 
     private void saveDraft() {
 
-        // MainApp.form is only initialised at first section
+        // IMPORTANT: MainApp.form = new Form(); is only initialised at first section
+        MainApp.form = new Form();
 
         form.setUserName(MainApp.user.getUserName());
         form.setSysDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
@@ -136,4 +155,12 @@ public class Section1Activity extends AppCompatActivity {
             return false;
         }
     }
+
+    @Override
+    public void onBackPressed() {
+       // Toast.makeText(getApplicationContext(), "Back Press Not Allowed", Toast.LENGTH_LONG).show();
+        finish();
+        startActivity(new Intent(this, MainActivity.class));
+    }
+
 }

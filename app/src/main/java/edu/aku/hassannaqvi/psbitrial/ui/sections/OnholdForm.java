@@ -20,6 +20,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import edu.aku.hassannaqvi.psbitrial.MainActivity;
 import edu.aku.hassannaqvi.psbitrial.R;
 import edu.aku.hassannaqvi.psbitrial.core.MainApp;
 import edu.aku.hassannaqvi.psbitrial.database.DatabaseHelper;
@@ -92,13 +93,15 @@ public class OnholdForm extends AppCompatActivity {
        Calendar cur = Calendar.getInstance();
         long timeLapsed = 0;
 
-        String holdmap = "";
+        String holdmap = "PATIENTS DUE (past 30 mins):\r\n";
+        holdmap += "===========================\r\n\r\n";
+        String pendingmap = "PATIENTS ON HOLD (30 mins waiting):\r\n";
+        pendingmap += "==================================\r\n\r\n";
 
 
 
         Map<String, ?> onhold = sp.getAll();
         for (Map.Entry<String, ?> entry : onhold.entrySet()) {
-
 
             try {
                 cal.setTime(df.parse(String.valueOf(entry.getValue())));
@@ -119,16 +122,27 @@ public class OnholdForm extends AppCompatActivity {
                 mark = "\t*     --> ";
             }
 
+            if(TimeUnit.MILLISECONDS.toMinutes(timeLapsed) > 30) {
 
-            holdmap += mark+"MR. Number: " + entry.getKey() +
-                    ",\t |\t On-Hold Since: " + cal.get(Calendar.HOUR)+":"+cal.get(Calendar.MINUTE)
-                    + ",\t |\t Lapsed: " + String.format("%02d hours, %02d mins",
-                                                        TimeUnit.MILLISECONDS.toHours(timeLapsed),
-                                                        TimeUnit.MILLISECONDS.toMinutes(timeLapsed)
-            -TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(timeLapsed)))
-                    + "\r\n";
+                holdmap += mark + "Assessment No.: " + entry.getKey() +
+                        ",\t |\t On-Hold Since: " + cal.get(Calendar.HOUR) + ":" + cal.get(Calendar.MINUTE)
+                        + ",\t |\t Lapsed: " + String.format("%02d mins",
+                        TimeUnit.MILLISECONDS.toMinutes(timeLapsed))
+                        + "\r\n";
+
+            } else {
+              //  holdmap = "More patients will show after their 30 mins have passed.";
+                pendingmap += mark + "Assessment No.: " + entry.getKey() +
+                        ",\t |\t On-Hold Since: " + cal.get(Calendar.HOUR) + ":" + cal.get(Calendar.MINUTE)
+                        + ",\t |\t Remining: " + String.format("%02d mins",
+                        TimeUnit.MILLISECONDS.toMinutes(timeLapsed)-30)
+                        + "\r\n";
+            }
         }
+
+
         bi.onholdlist.setText(holdmap);
+        bi.pendinglist.setText(pendingmap);
         bi.mrno.setText(null);
         bi.tsf305.setText(null);
         Toast.makeText(this, onhold.toString(), Toast.LENGTH_SHORT).show();
@@ -136,5 +150,16 @@ public class OnholdForm extends AppCompatActivity {
 
     private boolean formValidation() {
         return Validator.emptyCheckingContainer(this, bi.GrpName);
+    }
+
+    public void btnEnd(View view) {
+        onBackPressed();
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Toast.makeText(getApplicationContext(), "Back Press Not Allowed", Toast.LENGTH_LONG).show();
+        finish();
+        startActivity(new Intent(this, MainActivity.class));
     }
 }

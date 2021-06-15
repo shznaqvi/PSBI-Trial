@@ -12,9 +12,11 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import edu.aku.hassannaqvi.psbitrial.models.Users;
 import edu.aku.hassannaqvi.psbitrial.models.VersionApp;
@@ -74,6 +76,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(FormsTable.COLUMN_UID, form.getUid());
         values.put(FormsTable.COLUMN_USERNAME, form.getUserName());
         values.put(FormsTable.COLUMN_SYSDATE, form.getSysDate());
+        values.put(FormsTable.COLUMN_ASSESMENT_NO, form.getAssessNo());
         values.put(FormsTable.COLUMN_MR_NUMBER, form.getMrNo());
         values.put(FormsTable.COLUMN_INFANT_NAME, form.getInfantName());
         values.put(FormsTable.COLUMN_TSF305, form.getTsf305());
@@ -194,17 +197,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-
-    public Form getFormByMrNo(String mrno,  String istatus) {
+    // istatus examples: (1) or (1,9) or (1,3,5)
+    public Form getFormByAssessNo(String assesNo,  String istatus) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = null;
         String[] columns = null;
 
         String whereClause;
-        whereClause = FormsTable.COLUMN_MR_NUMBER + "=? AND " +
-                FormsTable.COLUMN_ISTATUS + "=?";
+        whereClause = FormsTable.COLUMN_ASSESMENT_NO + "=? AND " +
+                FormsTable.COLUMN_ISTATUS + " in "+istatus;
 
-        String[] whereArgs = {mrno, istatus};
+        String[] whereArgs = {assesNo};
 
         String groupBy = null;
         String having = null;
@@ -288,16 +291,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 selectionArgs);
     }
 
-    public int updateTemp(String mrno, String temp) {
+    public int updateTemp(String assessNo, String temp) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(FormsTable.COLUMN_TSF305, temp);
+        values.put(FormsTable.COLUMN_SYSDATE, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).format(new Date().getTime())+"-Updated");
+        values.put(FormsTable.COLUMN_ISTATUS, "1");
+        values.put(FormsTable.COLUMN_SYNCED, (byte[]) null);
 
-     //   String selection = FormsTable.COLUMN_MR_NUMBER + " =? AND "+ FormsTable.COLUMN_ISTATUS + " =? ";
-        String selection = FormsTable.COLUMN_MR_NUMBER + " =? ";
-        //String[] selectionArgs = {mrno, "9"};
-        String[] selectionArgs = {mrno};
+     String selection = FormsTable.COLUMN_ASSESMENT_NO + " =? AND "+ FormsTable.COLUMN_ISTATUS + " =? ";
+       // String selection = FormsTable.COLUMN_ASSESMENT_NO + " =? ";
+        String[] selectionArgs = {assessNo, "9"};
+       // String[] selectionArgs = {assessNo};
 
         return db.update(FormsTable.TABLE_NAME,
                 values,
@@ -387,6 +393,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String[] columns = null;
 
         String whereClause;
+        //whereClause = null;
         whereClause = FormsTable.COLUMN_SYNCED + " is null ";
 
         String[] whereArgs = null;
@@ -433,7 +440,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     //update SyncedTables
-    public void updateSyncedForms(String id) {
+    public void updateSyncedforms(String id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
 // New value for one column
@@ -460,6 +467,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 FormsTable.COLUMN_UID,
                 FormsTable.COLUMN_SYSDATE,
                 FormsTable.COLUMN_MR_NUMBER,
+                FormsTable.COLUMN_ASSESMENT_NO,
                 FormsTable.COLUMN_INFANT_NAME,
                 FormsTable.COLUMN_TSF305,
                 FormsTable.COLUMN_ISTATUS,
@@ -488,6 +496,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 fc.setUid(c.getString(c.getColumnIndex(FormsTable.COLUMN_UID)));
                 fc.setSysDate(c.getString(c.getColumnIndex(FormsTable.COLUMN_SYSDATE)));
                 fc.setMrNo(c.getString(c.getColumnIndex(FormsTable.COLUMN_MR_NUMBER)));
+                fc.setAssessNo(c.getString(c.getColumnIndex(FormsTable.COLUMN_ASSESMENT_NO)));
                 fc.setInfantName(c.getString(c.getColumnIndex(FormsTable.COLUMN_INFANT_NAME)));
                 fc.setInfantName(c.getString(c.getColumnIndex(FormsTable.COLUMN_TSF305)));
                 fc.setiStatus(c.getString(c.getColumnIndex(FormsTable.COLUMN_ISTATUS)));

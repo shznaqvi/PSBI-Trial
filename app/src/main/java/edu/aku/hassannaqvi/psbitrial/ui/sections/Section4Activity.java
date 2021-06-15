@@ -77,10 +77,13 @@ public class Section4Activity extends AppCompatActivity {
 
     public void btnEnd(View view) {
         saveDraft();
-
-        Intent i = new Intent(this, EndingActivity.class);
-        i.putExtra("complete",false);
-        startActivity(i);
+        if (updateDB()) {
+            Toast.makeText(this, "Patient information not recorded.", Toast.LENGTH_SHORT).show();
+            finish();
+            Intent i = new Intent(this, EndingActivity.class);
+            i.putExtra("complete",false);
+            startActivity(i);
+        }
 
     }
 

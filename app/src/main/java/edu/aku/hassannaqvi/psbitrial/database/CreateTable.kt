@@ -21,6 +21,7 @@ object CreateTable {
             + FormsTable.COLUMN_SYNCED + " TEXT,"
             + FormsTable.COLUMN_SYNCED_DATE + " TEXT,"
             + FormsTable.COLUMN_APPVERSION + " TEXT,"
+            + FormsTable.COLUMN_ASSESMENT_NO + " TEXT,"
             + FormsTable.COLUMN_MR_NUMBER + " TEXT,"
             + FormsTable.COLUMN_INFANT_NAME + " TEXT,"
             + FormsTable.COLUMN_TSF305 + " TEXT,"

@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
 
     <application
@@ -15,23 +16,29 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:immersive="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/PSBI">
         <activity
             android:name=".ui.sections.Section4Activity"
-            android:theme="@style/AppThemeEnglish1" />
+            android:theme="@style/AppThemeEnglish1"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
         <activity
             android:name=".ui.sections.Section5Activity"
-            android:theme="@style/AppThemeEnglish1" />
+            android:theme="@style/AppThemeEnglish1"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
 
         <activity
             android:name=".ui.sections.OnholdForm"
-            android:theme="@style/AppThemeEnglish1" />
+            android:theme="@style/AppThemeEnglish1"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
         <activity
             android:name=".ui.sections.Section3Activity"
-            android:theme="@style/AppThemeEnglish1" />
+            android:theme="@style/AppThemeEnglish1"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
         <activity
             android:name=".ui.sections.Section2Activity"
-            android:theme="@style/AppThemeEnglish1" />
+            android:theme="@style/AppThemeEnglish1"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
 
         <!--
                Set to true if your app is Standalone, that is, it does not require the handheld
@@ -44,9 +51,11 @@
 
         <activity
             android:name=".ui.sections.Section1Activity"
-            android:theme="@style/AppThemeEnglish1" />
+            android:theme="@style/AppThemeEnglish1"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
         <activity
             android:name=".ui.LoginActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden"
       >
 
             <intent-filter>
@@ -57,13 +66,15 @@
         </activity>
         <activity
             android:name=".ui.SyncActivity"
+
           />
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden">
 
         </activity>
         <activity android:name=".ui.sections.EndingActivity"
-
+            android:windowSoftInputMode="adjustResize|stateHidden"
             android:theme="@style/AppThemeEnglish1">
 
         </activity>

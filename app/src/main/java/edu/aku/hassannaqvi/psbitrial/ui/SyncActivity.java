@@ -56,6 +56,7 @@ import edu.aku.hassannaqvi.psbitrial.workers.PhotoUploadWorker2;
 import edu.aku.hassannaqvi.psbitrial.workers.ReadJSONWorker;
 
 import static edu.aku.hassannaqvi.psbitrial.core.MainApp.sdDir;
+import static edu.aku.hassannaqvi.psbitrial.core.MainApp.uploadData;
 import static edu.aku.hassannaqvi.psbitrial.database.CreateTable.PROJECT_NAME;
 import static edu.aku.hassannaqvi.psbitrial.utils.AndroidUtilityKt.isNetworkConnected;
 
@@ -139,9 +140,11 @@ public class SyncActivity extends AppCompatActivity {
                 uploadTables.clear();
                 MainApp.uploadData.clear();
 
-                // MobileHealth
+                // Forms
                 uploadTables.add(new SyncModel(FormsTable.TABLE_NAME));
                 MainApp.uploadData.add(db.getUnsyncedForms());
+                MainApp.downloadData = new String[uploadData.size()];
+
                 setAdapter(uploadTables);
                 BeginUpload();
                 break;
@@ -360,12 +363,13 @@ public class SyncActivity extends AppCompatActivity {
                     if (workInfo.getState() != null &&
                             workInfo.getState() == WorkInfo.State.SUCCEEDED) {
 
-                        String result = workInfo.getOutputData().getString("message");
+                        //String result = workInfo.getOutputData().getString("message");
 
                         int sSynced = 0;
                         int sDuplicate = 0;
                         StringBuilder sSyncedError = new StringBuilder();
                         JSONArray json;
+                        String result = MainApp.downloadData[position];
 
                         if (result != null) {
                             if (result.length() > 0) {

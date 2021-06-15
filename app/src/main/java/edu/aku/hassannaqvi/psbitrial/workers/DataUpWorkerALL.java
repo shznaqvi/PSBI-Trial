@@ -41,7 +41,7 @@ public class DataUpWorkerALL extends Worker {
     private final String uploadTable;
     private final JSONArray uploadData;
     private final URL serverURL = null;
-    private final String nTitle = "Naunehal: Data Upload";
+    private final String nTitle = PROJECT_NAME+": Data Upload";
     private final int position;
     private final String uploadWhere;
     HttpURLConnection urlConnection;
@@ -204,18 +204,20 @@ public class DataUpWorkerALL extends Worker {
 
             //JSONObject jsonObjectCC = jsonArray.getJSONObject(0);
             ///BE CAREFULL DATA.BUILDER CAN HAVE ONLY 1024O BYTES. EACH CHAR HAS 8 BIT
-            if (result.toString().length() > 10240) {
+          /*  if (result.toString().length() > 10240) {
                 data = new Data.Builder()
                         .putString("message", "Data Limit Reached ("+result.toString().length()+"/10240):"+String.valueOf(result).substring(0, (10240 - 1) / 8))
                         .putInt("position", this.position)
                         .build();
-            } else {
+            } else {*/
+            MainApp.downloadData[position] = result.toString();
+
 
                 data = new Data.Builder()
-                        .putString("message", String.valueOf(result))
+                      //  .putString("message", String.valueOf(result))
                         .putInt("position", this.position)
                         .build();
-            }
+         /*   }*/
 
             displayNotification(nTitle, "Uploaded successfully");
             return Result.success(data);

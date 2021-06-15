@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.Locale;
 
 
+import edu.aku.hassannaqvi.psbitrial.MainActivity;
 import edu.aku.hassannaqvi.psbitrial.R;
 import edu.aku.hassannaqvi.psbitrial.contracts.TableContracts;
 import edu.aku.hassannaqvi.psbitrial.core.MainApp;
@@ -66,6 +67,8 @@ public class EndingActivity extends AppCompatActivity {
         if (!formValidation()) return;
         saveDraft();
         if (UpdateDB()) {
+
+            cleanupProcess();
             finish();
             Intent i = new Intent(this, Section1Activity.class);
             startActivity(i);
@@ -74,6 +77,10 @@ public class EndingActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Error in updating Database.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void cleanupProcess() {
+        form = null;
     }
 
     private boolean UpdateDB() {
