@@ -203,6 +203,17 @@ db = MainApp.appInfo.dbHelper;
                     getCalDate(form.getTsf106())
                     );
             bi.tsf202.setText(String.valueOf(ageindayss));
+            if (ageindayss > 0) {
+                bi.tsf206d1.setMaxvalue(ageindayss);
+                bi.tsf206d2.setMaxvalue(ageindayss);
+                bi.tsf206d3.setMaxvalue(ageindayss);
+                bi.tsf206d4.setMaxvalue(ageindayss);
+            } else {
+                bi.tsf206d1.setMaxvalue(1);
+                bi.tsf206d2.setMaxvalue(1);
+                bi.tsf206d3.setMaxvalue(1);
+                bi.tsf206d4.setMaxvalue(1);
+            }
         }
 
     }
