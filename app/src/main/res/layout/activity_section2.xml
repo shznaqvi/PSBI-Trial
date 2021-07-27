@@ -178,7 +178,7 @@
                             app:mask="####"
                             android:onTextChanged="@{callback::ZScoreOnTextChanged}"
                             app:maxValue="5500"
-                            app:minValue="1500"
+                            app:minValue="1000"
                             app:type="range" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
