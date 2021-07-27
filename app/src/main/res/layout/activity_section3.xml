@@ -89,7 +89,7 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/tsf301"
                             android:inputType="number"
-                            app:maxValue="90"
+                            app:maxValue="100"
                             app:minValue="25"
                             app:type="range" />
                     </LinearLayout>
